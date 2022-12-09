@@ -1,0 +1,241 @@
+openapi: 3.0.0
+info:
+  title: jobs API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://jobapiserver.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/registerrequest'
+                - example:
+                    name: sereen
+                    password: sereenSecret
+                    email: sereen@gmail.com
+            example:
+              name: sereen
+              password: sereenSecret
+              email: sereen@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginRequest'
+                - example:
+                    password: seredenSecret
+                    email: sereen@gmail.com
+            example:
+              password: seredenSecret
+              email: sereen@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    post:
+      tags:
+        - jobs
+      summary: createJob
+      operationId: createJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/createJobRequest'
+                - example:
+                    company: netFLEX
+                    position: DEV OPS
+            example:
+              company: netFLEX
+              position: DEV OPS
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - jobs
+      summary: getAllJobs
+      operationId: getAllJobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  paths:
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+        - jobs
+      summary: getSingleJob
+      operationId: getSingleJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - jobs
+      summary: updatedJob
+      operationId: updatedJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/updatedJobRequest'
+                - example:
+                    company: apple
+                    position: Fullstack-developer
+            example:
+              company: apple
+              position: Fullstack-developer
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+    delete:
+      tags:
+        - jobs
+      summary: DeleteJob
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    registerrequest:
+      title: registerrequest
+      required:
+        - name
+        - password
+        - email
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+      example:
+        name: sereen
+        password: sereenSecret
+        email: sereen@gmail.com
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - password
+        - email
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+      example:
+        password: seredenSecret
+        email: sereen@gmail.com
+    createJobRequest:
+      title: createJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: netFLEX
+        position: DEV OPS
+    updatedJobRequest:
+      title: updatedJobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: apple
+        position: Fullstack-developer
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: auth
+    description: ''
+  - name: jobs
+    description: ''
